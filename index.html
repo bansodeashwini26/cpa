@@ -50,13 +50,13 @@
 <body>
     <h1>CPA Tracking Test Page</h1>
     
-    <a href="?click_id=xyz123" data-track-action="click" data-track-value="partner-link" onclick="trackAction(event)">Click Here (Tracked)</a>
+    <a href="?click_id=xyz123" data-track-action="click" data-track-value="partner-link" onclick="trackify.trackEvent("click-here")">Click Here (Tracked)</a>
     
     <form onsubmit="trackAction(event); event.preventDefault();">
         <input type="text" name="email" placeholder="Enter your email">
-        <button type="submit" data-track-action="form_submit" data-track-value="lead_form">Submit</button>
+        <button type="button" data-track-action="form_submit" data-track-value="lead_form" onclick="trackify.trackEvent("submit")">Submit</button>
     </form>
     
-    <button data-track-action="purchase" data-track-value="order_50" onclick="trackAction(event)">Complete Purchase</button>
+    <button data-track-action="purchase" data-track-value="order_50"  onclick="trackify.trackEvent("purchased")">Complete Purchase</button>
 </body>
 </html>

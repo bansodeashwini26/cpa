@@ -3,60 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CPA Tracking Demo</title>
-<script>(function(w,d,s,u){let j=d.createElement(s);j.async=true;j.src=`https://dev-assets.channelboost.com/scripts/cts.js?uid=${u}`;let f=d.getElementsByTagName(s)[0];f.parentNode.insertBefore(j,f);})(window,document,"script","7ea84b2e-263f-4d36-b8d3-48bf7f71eeac");</script>
+    <title>Tracking Demo</title>
     <script>
-        function trackAction(event) {
-            let actionType = event.target.getAttribute('data-track-action');
-            let actionValue = event.target.getAttribute('data-track-value');
-            let clickId = new URLSearchParams(window.location.search).get('click_id') || 'N/A';
-            
-            console.log(`Tracking Event: ${actionType}`);
-            console.log(`Value: ${actionValue}`);
-            console.log(`Click ID: ${clickId}`);
-            
-            // Simulating sending data to a tracking endpoint
-            fetch('https://dummy-tracker.com/track', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    event: actionType,
-                    value: actionValue,
-                    click_id: clickId,
-                    timestamp: new Date().toISOString(),
-                    userAgent: navigator.userAgent
-                })
-            }).then(response => response.json()).then(data => console.log('Tracking Response:', data));
-        }
+        (function(w,d,s,u){
+            let j=d.createElement(s);
+            j.async=true;
+            j.src=`https://dev-assets.channelboost.com/scripts/cts.js?uid=${u}`;
+            let f=d.getElementsByTagName(s)[0];
+            f.parentNode.insertBefore(j,f);
+        })(window,document,"script","7ea84b2e-263f-4d36-b8d3-48bf7f71eeac");
         
-        function trackPageView() {
-            let clickId = new URLSearchParams(window.location.search).get('click_id') || 'N/A';
-            fetch('https://dummy-tracker.com/pageview', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    event: 'page_view',
-                    click_id: clickId,
-                    timestamp: new Date().toISOString(),
-                    userAgent: navigator.userAgent,
-                    page: window.location.href
-                })
-            }).then(response => response.json()).then(data => console.log('Page View Tracked:', data));
+        function trackAction(event, actionId) {
+            if (typeof trackify !== 'undefined' && typeof trackify.trackevent === 'function') {
+                trackify.trackevent(actionId);
+                console.log(`Tracking event: ${actionId}`);
+            } else {
+                console.warn("trackify.trackevent is not available yet.");
+            }
         }
-        
-        window.onload = trackPageView;
     </script>
 </head>
 <body>
-    <h1>CPA Tracking Test Page</h1>
+    <h1>Tracking Test Page</h1>
     
-    <a href="?click_id=xyz123" data-track-action="click" data-track-value="partner-link" onclick="trackify.trackEvent("click-here")">Click Here (Tracked)</a>
+    <a href="#" onclick="trackAction(event, 'click-here')">Click Here (Tracked)</a>
     
-    <form onsubmit="trackAction(event); event.preventDefault();">
+    <form onsubmit="trackAction(event, 'submit'); event.preventDefault();">
         <input type="text" name="email" placeholder="Enter your email">
-        <button type="button" data-track-action="form_submit" data-track-value="lead_form" onclick="trackify.trackEvent("submit")">Submit</button>
+        <button type="submit">Submit</button>
     </form>
     
-    <button data-track-action="purchase" data-track-value="order_50"  onclick="trackify.trackEvent("purchased")">Complete Purchase</button>
+    <button onclick="trackAction(event, 'purchased')">Complete Purchase</button>
 </body>
 </html>

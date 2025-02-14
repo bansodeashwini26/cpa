@@ -14,12 +14,10 @@
         })(window,document,"script","7ea84b2e-263f-4d36-b8d3-48bf7f71eeac");
         
         function trackAction(event, actionId) {
-            if (typeof trackify !== 'undefined' && typeof trackify.trackevent === 'function') {
+            
                 trackify.trackevent(actionId);
                 console.log(`Tracking event: ${actionId}`);
-            } else {
-                console.warn("trackify.trackevent is not available yet.");
-            }
+            
         }
     </script>
 </head>

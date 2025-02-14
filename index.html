@@ -15,7 +15,7 @@
         
         function trackAction(event, actionId) {
             
-                trackify.trackevent(actionId);
+                trackify.trackEvent(actionId);
                 console.log(`Tracking event: ${actionId}`);
             
         }
@@ -24,7 +24,7 @@
 <body>
     <h1>Tracking Test Page</h1>
     
-    <a href="#" onclick="trackAction(event, 'click-here')">Click Here for tracking(Tracked)</a>
+    <a href="#" onclick="trackAction(event, 'click-here')">Click Here for tracking1(Tracked)</a>
     
     <form onsubmit="trackAction(event, 'submit'); event.preventDefault();">
         <input type="text" name="email" placeholder="Enter your email">
